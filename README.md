@@ -13,6 +13,7 @@ Demonstration of Claude Code failing to follow instructions from CLAUDE.md.
 
 3. Run demonstrations (see the list of models at https://support.claude.com/en/articles/11940350-claude-code-model-configuration):
    ```
+   # MODEL=claude-sonnet-4-6 && \
    # MODEL=claude-opus-4-6 && \
    # MODEL=claude-opus-4-5-20251101 && \
    # MODEL=claude-sonnet-4-5-20250929 && \
@@ -26,6 +27,30 @@ Demonstration of Claude Code failing to follow instructions from CLAUDE.md.
 
 4. Example demonstration output.
    Use the first two performed runs, remember to use four backtics to quote the model response:
+
+   - claude-sonnet-4-6 with `2.1.58 (Claude Code)`
+
+      Fails to: 1) confirm it has read CLAUDE.md 2) create TODO list
+      ````
+      The edit was not permitted. Please approve the write permission so I can apply the fix — or let me know how you'd like to proceed.
+
+      The fix needed is simple: add a closing `"` before the `)` on line 1:
+
+      ```python
+      # Before (broken):
+      print("Claude fails to follow CLAUDE.md instructions)
+
+      # After (fixed):
+      print("Claude fails to follow CLAUDE.md instructions")
+      ```
+
+      Once you confirm the fix is applied (or grant permission), I'll mark the TODO item as resolved.
+      ````
+
+      Fails to: 1) confirm it has read CLAUDE.md 2) create TODO list
+      ````
+      It looks like write permission hasn't been granted yet. Could you approve the file edit so I can apply the fix? The change is simply adding a closing `"` before the `)` on line 1.
+      ````
 
    - claude-opus-4-6 with `2.1.58 (Claude Code)`
 
