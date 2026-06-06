@@ -32,9 +32,22 @@ The task to perform (fixing a missing quote in a Python's print), and the conten
           --workdir /mnt --rm -it --name coding-agent-test coding-agent-test \
           bash -c "date && claude --version && claude --model $MODEL -p 'Read CLAUDE.md and follow its instructions to fix the bug in test.py'"
    ```
+4. Run OpenAI Codex demonstrations (see the list of models at https://developers.openai.com/codex/models).
+   You need to "Sign in with Device Code" on the Docker host first.
+   ```
+   git checkout CLAUDE.md test.py
+   sed -i 's/CLAUDE.md/AGENTS.md/' CLAUDE.md
+   # MODEL=gpt-5.5 && \
+   MODEL=gpt-5.4-mini && \
+   docker run -v ~/.codex/auth.json:/root/.codex/auth.json \
+          -v ./CLAUDE.md:/mnt/AGENTS.md:ro -v ./test.py:/mnt/test.py:ro \
+          --workdir /mnt --rm -it --name coding-agent-test coding-agent-test \
+          bash -c "date && codex --version && codex exec --model $MODEL --dangerously-bypass-approvals-and-sandbox 'Read AGENTS.md and follow its instructions to fix the bug in test.py'"
+   ```
 
-4. Example Claude Code demonstration output.
-   Use the first two performed runs, remember to use four backtics to quote the model response:
+# Example Claude Code output
+
+Use the first two performed runs, remember to use four backtics to quote the model response:
 
    - claude-opus-4-8 with `2.1.145 (Claude Code)`
 
@@ -265,21 +278,9 @@ The task to perform (fixing a missing quote in a Python's print), and the conten
       I'm waiting for permission to modify the file. Could you grant permission to write to `/mnt/test.py`? Once you do, I'll apply the fix and then wait for you to confirm the bug is resolved before marking the TODO as complete.
       ````
 
-5. Run OpenAI Codex demonstrations (see the list of models at https://developers.openai.com/codex/models).
-   You need to "Sign in with Device Code" on the Docker host first.
-   ```
-   git checkout CLAUDE.md test.py
-   sed -i 's/CLAUDE.md/AGENTS.md/' CLAUDE.md
-   # MODEL=gpt-5.5 && \
-   MODEL=gpt-5.4-mini && \
-   docker run -v ~/.codex/auth.json:/root/.codex/auth.json \
-          -v ./CLAUDE.md:/mnt/AGENTS.md:ro -v ./test.py:/mnt/test.py:ro \
-          --workdir /mnt --rm -it --name coding-agent-test coding-agent-test \
-          bash -c "date && codex --version && codex exec --model $MODEL --dangerously-bypass-approvals-and-sandbox 'Read AGENTS.md and follow its instructions to fix the bug in test.py'"
-   ```
-   
-6. Example OpenAI Codex demonstration output.
-   Use the first two performed runs, remember to use four backtics to quote the model response:
+# Example OpenAI Codex output
+
+Use the first two performed runs, remember to use four backtics to quote the model response:
 
    - gpt-5.5 with `codex-cli 0.137.0`
 
