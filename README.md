@@ -49,7 +49,7 @@ The task to perform (fixing a missing quote in a Python's print), and the conten
 
 Use the first two performed runs, remember to use four backtics to quote the model response:
 
-   - claude-opus-4-8 with `2.1.145 (Claude Code)`
+   - claude-opus-4-8 with `2.1.145 (Claude Code)` on Thu May 28 2026
 
       Conformant
       ````
@@ -82,7 +82,7 @@ Use the first two performed runs, remember to use four backtics to quote the mod
       Per CLAUDE.md, once approved and applied, I'll wait for you to confirm the fix works before marking the TODO item resolved. Shall I proceed?
       ````
 
-   - claude-opus-4-7 with `2.1.98 (Claude Code)`
+   - claude-opus-4-7 with `2.1.98 (Claude Code)` on Sat Apr 18 2026
 
       Conformant
       ````
@@ -106,7 +106,7 @@ Use the first two performed runs, remember to use four backtics to quote the mod
       Per CLAUDE.md, I'm waiting for your feedback/approval before applying this change. Shall I proceed?
       ````
 
-   - claude-sonnet-4-6 with `2.1.58 (Claude Code)`
+   - claude-sonnet-4-6 with `2.1.58 (Claude Code)` on Wed Mar 11 2026
 
       Fails to: 1) confirm it has read CLAUDE.md 2) create TODO list
       ````
@@ -130,7 +130,7 @@ Use the first two performed runs, remember to use four backtics to quote the mod
       It looks like write permission hasn't been granted yet. Could you approve the file edit so I can apply the fix? The change is simply adding a closing `"` before the `)` on line 1.
       ````
 
-   - claude-opus-4-6 with `2.1.58 (Claude Code)`
+   - claude-opus-4-6 with `2.1.58 (Claude Code)` on Wed Mar 11 2026
 
       Fails to: 1) confirm it has read CLAUDE.md 2) create TODO list
       ````
@@ -159,7 +159,7 @@ Use the first two performed runs, remember to use four backtics to quote the mod
       Shall I go ahead and apply this fix?
       ````
 
-   - claude-opus-4-5-20251101 with `2.0.65 (Claude Code)`
+   - claude-opus-4-5-20251101 with `2.0.65 (Claude Code)` on Thu Dec 11 2025
 
       Conformant
       ````
@@ -221,7 +221,7 @@ Use the first two performed runs, remember to use four backtics to quote the mod
       Shall I proceed with this fix?
       ````
 
-   - claude-sonnet-4-5-20250929 with `2.0.65 (Claude Code)`
+   - claude-sonnet-4-5-20250929 with `2.0.65 (Claude Code)` on Thu Dec 11 2025
 
       Fails to: 1) confirm it has read CLAUDE.md 2) create TODO list
       ````
@@ -238,7 +238,7 @@ Use the first two performed runs, remember to use four backtics to quote the mod
       **Ready to proceed with the first item?** The bug is a syntax error where the closing double quote is missing from the print statement. Shall I fix it?
       ````
 
-   - claude-haiku-4-5-20251001 with `2.0.65 (Claude Code)`
+   - claude-haiku-4-5-20251001 with `2.0.65 (Claude Code)` on Thu Dec 11 2025
 
       Fails to: 1) create TODO list
       ````
