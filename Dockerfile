@@ -13,6 +13,9 @@ RUN python3 --version
 
 ENV PATH="/root/.local/bin:$PATH"
 
+RUN npm install -g @google/gemini-cli
+RUN gemini --version
+
 RUN npm i -g @openai/codex
 RUN codex --version
 
