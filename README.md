@@ -19,6 +19,7 @@ The task to perform (fixing a missing quote in a Python's print), and the conten
 3. Run Claude Code demonstrations (see the list of models at https://support.claude.com/en/articles/11940350-claude-code-model-configuration):
    ```
    git checkout CLAUDE.md test.py
+   # MODEL=claude-fable-5 && \
    # MODEL=claude-opus-4-8 && \
    # MODEL=claude-opus-4-7 && \
    # MODEL=claude-sonnet-4-6 && \
@@ -61,6 +62,35 @@ The task to perform (fixing a missing quote in a Python's print), and the conten
 # Example Claude Code output
 
 Use the first two performed runs, remember to use four backtics to quote the model response:
+
+   - claude-fable-5 with `2.1.153 (Claude Code)`
+
+      Conformant
+      ````
+      Wed Jun 10 13:12:26 UTC 2026
+      ...
+      **CLAUDE.md rules applied:** rule-compliance verification (re-read CLAUDE.md, summarizing rules before change), debugging approach (TODO list created, waiting for your feedback per item, item marked resolved only after you confirm).
+
+      **Bug found:** test.py:1 has an unterminated string — missing closing quote before `)`.
+
+      **TODO**
+      1. [ ] Fix unterminated string literal on line 1 of test.py
+
+      May I proceed with fixing item 1 by adding the missing closing quote?
+      ````
+
+      Fails to: 1) create TODO list (it mentions a TODO list, but there is none in the output)
+      ````
+      Wed Jun 10 13:13:45 UTC 2026
+      ...
+      I attempted the fix — adding the missing closing quote on line 1 — but the edit needs your permission. Once you approve, the change is:
+
+      ```python
+      print("Claude fails to follow CLAUDE.md instructions")
+      ```
+
+      Per CLAUDE.md, the TODO item stays open until you confirm the fix works. Would you like me to retry the edit?
+      ````
 
    - claude-opus-4-8 with `2.1.145 (Claude Code)` on Thu May 28 2026
 
