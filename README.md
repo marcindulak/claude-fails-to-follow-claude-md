@@ -16,6 +16,9 @@ The task to perform (fixing a missing quote in a Python's print), and the conten
    docker build --progress=plain -t coding-agent-test .
    ```
 
+> [!WARNING]
+> The runs described below may be expensive. Try a single run first and check the costs.
+
 3. Run Claude Code demonstrations (see the list of models at https://support.claude.com/en/articles/11940350-claude-code-model-configuration):
    ```
    git checkout CLAUDE.md test.py
@@ -29,11 +32,13 @@ The task to perform (fixing a missing quote in a Python's print), and the conten
    # MODEL=claude-opus-4-5-20251101 && \
    # MODEL=claude-sonnet-4-5-20250929 && \
    MODEL=claude-haiku-4-5-20251001 && \
+   date && \
    docker run -v ~/.claude/.credentials.json:/root/.claude/.credentials.json:ro \
           -v ./CLAUDE.md:/mnt/CLAUDE.md:ro -v ./test.py:/mnt/test.py:ro \
           -e DISABLE_PROMPT_CACHING=1 \
-          --workdir /mnt --rm -it --name coding-agent-test coding-agent-test \
-          bash -c "date && claude --version && claude --model $MODEL -p 'Read CLAUDE.md and follow its instructions to fix the bug in test.py'"
+          --workdir /mnt --rm -i --name coding-agent-test coding-agent-test \
+          bash -c "claude --model $MODEL --output-format stream-json --verbose -p 'Read CLAUDE.md and follow its instructions to fix the bug in test.py'" </dev/null | \
+          jq -r 'select(.type == "assistant") | .message.model as $model | .message.content[] | select(.type == "thinking" or .type == "text") | "\n--- MESSAGE (\(.type)) \($model) ---\n" + (.text // .thinking)'
    ```
 4. Run OpenAI Codex demonstrations (see the list of models at https://developers.openai.com/codex/models).
    You need to "Sign in with Device Code" on the Docker host first.
@@ -42,10 +47,11 @@ The task to perform (fixing a missing quote in a Python's print), and the conten
    sed -i 's/CLAUDE.md/AGENTS.md/' CLAUDE.md
    # MODEL=gpt-5.5 && \
    MODEL=gpt-5.4-mini && \
+   date && \
    docker run -v ~/.codex/auth.json:/root/.codex/auth.json:ro \
           -v ./CLAUDE.md:/mnt/AGENTS.md:ro -v ./test.py:/mnt/test.py:ro \
           --workdir /mnt --rm -it --name coding-agent-test coding-agent-test \
-          bash -c "date && codex --version && codex exec --model $MODEL --dangerously-bypass-approvals-and-sandbox 'Read AGENTS.md and follow its instructions to fix the bug in test.py'"
+          bash -c "codex exec --model $MODEL --dangerously-bypass-approvals-and-sandbox 'Read AGENTS.md and follow its instructions to fix the bug in test.py'"
    ```
 
 5. [SUNSETTED Jun 18 2026](https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/) Run Google Gemini CLI demonstrations (see the list of models at https://geminicli.com/docs/cli/model/).
@@ -54,16 +60,17 @@ The task to perform (fixing a missing quote in a Python's print), and the conten
    sed -i 's/CLAUDE.md/GEMINI.md/' CLAUDE.md
    # MODEL=gemini-3.1-flash-lite && \
    MODEL=gemini-3-flash-preview && \
+   date && \
    docker run -v ~/.gemini/oauth_creds.json:/root/.gemini/oauth_creds.json:ro \
           -v ~/.gemini/settings.json:/root/.gemini/settings.json:ro \
           -v ./CLAUDE.md:/mnt/GEMINI.md:ro -v ./test.py:/mnt/test.py:ro \
           --workdir /mnt --rm -it --name coding-agent-test coding-agent-test \
-          bash -c "date && gemini --version && gemini --model $MODEL --skip-trust --yolo --prompt 'Read GEMINI.md and follow its instructions to fix the bug in test.py'"
+          bash -c "gemini --model $MODEL --skip-trust --yolo --prompt 'Read GEMINI.md and follow its instructions to fix the bug in test.py'"
    ```
 
 # Example Claude Code output
 
-Use the first two performed runs, remember to use four backtics to quote the model response:
+Perform several runs (e.g., 10), report conformant and non-conformant runs if any, remember to use four backtics to quote the model response:
 
    - claude-opus-5 with `2.1.219 (Claude Code)`
 
@@ -410,7 +417,7 @@ Use the first two performed runs, remember to use four backtics to quote the mod
 
 # Example OpenAI Codex output
 
-Use the first two performed runs, remember to use four backtics to quote the model response:
+Perform several runs (e.g., 10), report conformant and non-conformant runs if any, remember to use four backtics to quote the model response:
 
    - gpt-5.5 with `codex-cli 0.137.0`
 
@@ -484,7 +491,7 @@ Use the first two performed runs, remember to use four backtics to quote the mod
 
 # Example Google Gemini output [SUNSETTED Jun 18 2026](https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/).
 
-Use the first two performed runs, remember to use four backtics to quote the model response:
+Perform several runs (e.g., 10), report conformant and non-conformant runs if any, remember to use four backtics to quote the model response:
 
    - gemini-3.1-flash-lite with `0.45.2`
 
