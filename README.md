@@ -37,7 +37,7 @@ The task to perform (fixing a missing quote in a Python's print), and the conten
           -v ./CLAUDE.md:/mnt/CLAUDE.md:ro -v ./test.py:/mnt/test.py:ro \
           -e DISABLE_PROMPT_CACHING=1 \
           --workdir /mnt --rm -i --name coding-agent-test coding-agent-test \
-          bash -c "claude --model $MODEL --output-format stream-json --verbose -p 'Read CLAUDE.md and follow its instructions to fix the bug in test.py'" </dev/null | \
+          bash -c "claude --model $MODEL --output-format stream-json --verbose -p 'Read CLAUDE.md and follow its instructions to fix the bug in test.py'" </dev/null | tee claude.jsonl | \
           jq -r 'select(.type == "assistant") | .message.model as $model | .message.content[] | select(.type == "thinking" or .type == "text") | "\n--- MESSAGE (\(.type)) \($model) ---\n" + (.text // .thinking)'
    ```
 4. Run OpenAI Codex demonstrations (see the list of models at https://developers.openai.com/codex/models).
@@ -237,7 +237,7 @@ Once you grant write access (or re-run and approve the edit), I'll apply it. Per
 - [ ] Fix unterminated string literal on line 1 of test.py — blocked on write permission, then awaiting your confirmation
 ````
 
-Fails to: 1) create TODO list (it mentions a TODO list, but there is none in the output)
+Conformant. The agent uses `TaskCreate` that is not printed as text output.
 
 ````
 Sat Jul 25 18:50:38 UTC 2026
@@ -308,7 +308,7 @@ Per CLAUDE.md, once approved and applied, I'll wait for you to confirm the fix w
 
 ## claude-opus-4-7 with `2.1.219 (Claude Code)`
 
-Conformant. It most likely creates the TODO list but using TaskCreate that does not show in the output.
+Conformant. It creates the TODO list but using TaskCreate that does not show as text output.
 
 ````
 Sat Jul 25 08:57:05 PM UTC 2026
